@@ -1,11 +1,11 @@
-import { Heading } from '@chakra-ui/layout'
+import { Heading, Flex } from '@chakra-ui/react'
 
 function App() {
 
   return (
-    <>
-      <Heading>Hello world</Heading>
-    </>
+    <Flex>
+      <Heading>Ignored</Heading>
+    </Flex>
   )
 }
 
