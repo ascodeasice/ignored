@@ -3,7 +3,7 @@ import FileBlock from './components/FileBlock';
 import { useEffect, useState } from 'react';
 import ignore, { Ignore } from 'ignore';
 import { v4 as uuidv4 } from 'uuid';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { GithubIcon } from './components/icon/GithubIcon';
 
 function App() {
@@ -56,6 +56,10 @@ one/two
     setFileNames(fileNames.concat(['']));
   }
 
+  const deleteAllFiles = () => {
+    setFileNames([]);
+  }
+
   return (
     <Grid minH={'100vh'} gridTemplateColumns={'1fr 1fr'} gridTemplateRows={'min-content 1fr'} rowGap={4} columnGap={8} mx={4}>
       {/* Header */}
@@ -76,7 +80,10 @@ one/two
       <GridItem>
         <Heading size={'lg'} mb={'4'}>Files</Heading>
         <Flex direction={'column'} gap={2}>
-          <IconButton icon={<AddIcon />} aria-label='new file name' w={'min-content'} onClick={createFile} />
+          <Flex gap={2}>
+            <IconButton icon={<AddIcon />} aria-label='new file name' w={'min-content'} onClick={createFile} />
+            <IconButton icon={<DeleteIcon />} aria-label='delete all file name' w={'min-content'} onClick={deleteAllFiles} />
+          </Flex>
           {
             fileNames.map((name, index) => {
               try {
