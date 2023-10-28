@@ -40,11 +40,11 @@ function App() {
           {
             fileNames.map((name, index) => {
               try {
-                return <FileBlock key={uuidv4()}
+                return <FileBlock key={uuidv4()} invalid={false}
                   fileName={name} ignored={ig.ignores(name)} index={index} setFileNames={setFileNames} />
               } catch (error) {
-                // TODO: mark as invalid
-                return <FileBlock key={uuidv4()} fileName={name} ignored={false} index={index} setFileNames={setFileNames} />
+                return <FileBlock key={uuidv4()} invalid={true}
+                  fileName={name} ignored={false} index={index} setFileNames={setFileNames} />
               }
             })
           }
