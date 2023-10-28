@@ -32,7 +32,7 @@ const EditButton = ({ fileName, index, setFileNames }: EditButtonProps) => {
   } else {
     return (
       <ButtonGroup justifyContent='center' size='sm' ml={'4'}>
-        <IconButton icon={<EditIcon />} ml={'4'} aria-label={`edit file block with name ${fileName}`} {...getEditButtonProps()}>Click me</IconButton>
+        <IconButton icon={<EditIcon />} ml={'4'} aria-label={`edit file block with name ${fileName}`} {...getEditButtonProps()} />
         <IconButton icon={<DeleteIcon />} aria-label={`delete file name ${fileName}`} onClick={deleteFile} />
       </ButtonGroup>
     )
