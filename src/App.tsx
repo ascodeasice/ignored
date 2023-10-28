@@ -1,9 +1,10 @@
-import { Heading, Textarea, Grid, GridItem, Flex, IconButton } from '@chakra-ui/react';
+import { Heading, Textarea, Grid, GridItem, Flex, IconButton, Link } from '@chakra-ui/react';
 import FileBlock from './components/FileBlock';
 import { useEffect, useState } from 'react';
 import ignore, { Ignore } from 'ignore';
 import { v4 as uuidv4 } from 'uuid';
 import { AddIcon } from '@chakra-ui/icons';
+import { GithubIcon } from './components/icon/GithubIcon';
 
 function App() {
   // TODO: store input in localStorage
@@ -59,13 +60,16 @@ one/two
     <Grid minH={'100vh'} gridTemplateColumns={'1fr 1fr'} gridTemplateRows={'min-content 1fr'} rowGap={4} columnGap={8} mx={4}>
       {/* Header */}
       <GridItem mt={2} colSpan={2}>
-        <Heading>Ignored</Heading>
-        {/* TODO: sub title */}
-        {/* TODO: github icon */}
+        <Flex alignItems={'center'} gap={4}>
+          <Heading>Ignored</Heading>
+          <Link href='https://github.com/ascodeasice/ignored' target='blank'>
+            <GithubIcon boxSize='8' />
+          </Link>
+        </Flex>
       </GridItem>
       {/* body */}
       <GridItem>
-        <Heading size={'lg'} mb={4}>.ignore File</Heading>
+        <Heading size={'lg'} mb={4}>Ignore File</Heading>
         <Textarea variant={'filled'} size={'lg'} height={'80%'} value={ignoreFile}
           onChange={(e) => { setIgnoreFile(e.target.value) }} placeholder={defaultIgnore} />
       </GridItem>
