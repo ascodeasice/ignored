@@ -19,6 +19,7 @@ const FileBlock = ({ fileName, ignored, invalid, index, autoFocusing, setAutoFoc
   const shouldFocus = autoFocusing && index === 0; // the newly created
 
   const [color, setColor] = useState<string>(shouldFocus || (!invalid) ? '' : 'red.500');
+  const [opacity, setOpacity] = useState<number>(ignored ? 0.5 : 1);
   const onSubmit = (nextValue: string) => {
     setFileNames((prev) => {
       return [...prev.slice(0, index), nextValue, ...prev.slice(index + 1)]
@@ -27,19 +28,22 @@ const FileBlock = ({ fileName, ignored, invalid, index, autoFocusing, setAutoFoc
   }
 
   const onChange = () => {
+    // make sure user can edit normally
     setColor('');
+    setOpacity(1);
   }
 
   const onCancel = () => {
     // set to red if it was invalid (value won't change)
     setColor(invalid ? 'red.500' : '')
+    setOpacity(ignored ? 0.5 : 1)
   }
 
 
   return (
-    <Editable defaultValue={fileName} fontSize={'lg'} isPreviewFocusable={false} opacity={ignored ? '0.5' : '1'}
+    <Editable defaultValue={fileName} fontSize={'lg'} isPreviewFocusable={false} opacity={opacity}
       onSubmit={onSubmit} onChange={onChange} placeholder="Enter file name" color={color} startWithEditView={shouldFocus}
-      onCancel={onCancel} >
+      onCancel={onCancel}>
       <EditablePreview />
       <Input as={EditableInput} />
       <EditButton fileName={fileName} index={index} setFileNames={setFileNames} />
