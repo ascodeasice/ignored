@@ -53,10 +53,10 @@ one/two
   }
   const defaultIgnoreFile = localStorage.getItem(ignoreFileLsKey) ?? initialIgnore;
 
-
   const [fileNames, setFileNames] = useState<string[]>(defaultFileNames);
   const [ignoreFile, setIgnoreFile] = useState<string>(defaultIgnoreFile);
   const [ig, setIg] = useState<Ignore>(ignore());
+  const [autoFocusing, setAutoFocusing] = useState<boolean>(false); // new is created
 
   useEffect(() => {
     const newIg = ignore().add(ignoreFile);
@@ -70,7 +70,8 @@ one/two
   }, [fileNames])
 
   const createFile = () => {
-    setFileNames(fileNames.concat(['']));
+    setFileNames(['', ...fileNames]); // place new one in the beginning
+    setAutoFocusing(true)
   }
 
   const deleteAllFiles = () => {
@@ -104,11 +105,13 @@ one/two
           {
             fileNames.map((name, index) => {
               try {
-                return <FileBlock key={uuidv4()} invalid={false}
-                  fileName={name} ignored={ig.ignores(name)} index={index} setFileNames={setFileNames} />
+                return <FileBlock key={uuidv4()} invalid={false} autoFocusing={autoFocusing}
+                  setAutoFocusing={setAutoFocusing} fileName={name} ignored={ig.ignores(name)} index={index}
+                  setFileNames={setFileNames} />
               } catch (error) {
-                return <FileBlock key={uuidv4()} invalid={true}
-                  fileName={name} ignored={false} index={index} setFileNames={setFileNames} />
+                return <FileBlock key={uuidv4()} invalid={true} autoFocusing={autoFocusing}
+                  setAutoFocusing={setAutoFocusing} fileName={name} ignored={false} index={index}
+                  setFileNames={setFileNames} />
               }
             })
           }
