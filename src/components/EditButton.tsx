@@ -24,16 +24,16 @@ const EditButton = ({ fileName, index, setFileNames }: EditButtonProps) => {
 
   if (isEditing) {
     return (
-      <ButtonGroup justifyContent='center' size='sm' ml={'4'}>
-        <IconButton icon={<CheckIcon />} aria-label="submit file name" {...getSubmitButtonProps()} />
-        <IconButton icon={<CloseIcon />} aria-label="cancel edit file name" {...getCancelButtonProps()} />
+      <ButtonGroup justifyContent='center' size='sm' mt={2}>
+        <IconButton icon={<CheckIcon />} colorScheme="green" aria-label="submit file name" {...getSubmitButtonProps()} />
+        <IconButton icon={<CloseIcon />} colorScheme="red" aria-label="cancel edit file name" {...getCancelButtonProps()} />
       </ButtonGroup>
     )
   } else {
     return (
       <ButtonGroup justifyContent='center' size='sm' ml={'4'}>
         <IconButton icon={<EditIcon />} ml={'4'} aria-label={`edit file block with name ${fileName}`} {...getEditButtonProps()} />
-        <IconButton icon={<DeleteIcon />} aria-label={`delete file name ${fileName}`} onClick={deleteFile} />
+        <IconButton icon={<DeleteIcon />} colorScheme="red" aria-label={`delete file name ${fileName}`} onClick={deleteFile} />
       </ButtonGroup>
     )
   }
