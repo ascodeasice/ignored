@@ -6,9 +6,44 @@ import { v4 as uuidv4 } from 'uuid';
 import { AddIcon } from '@chakra-ui/icons';
 
 function App() {
-  // TOOD: store input in localStorage
-  const [fileNames, setFileNames] = useState<string[]>(['index.html', 'index.js']);
-  const [ignoreFile, setIgnoreFile] = useState<string>('index.html');
+  // TODO: store input in localStorage
+  const defaultFileNames = [
+    'index.js',
+    'index.html',
+    'app.log',
+    '#this-is-comment.js',
+    '#not-comment.js',
+    'relative.txt',
+    'one/two',
+    'foo',
+    'src/foo',
+    '.vscode/settings.json',
+    '.vscode/tasks.json',
+  ];
+
+  const defaultIgnore = `# match everything
+index.*
+
+# not something
+!index.js
+
+# comment/not comment
+#this-is-comment.js
+\\#not-comment.js
+
+# relative path
+/relative.txt
+one/two
+
+# match everything named with foo
+**/foo
+
+# ignore everything in a directory
+.vscode/
+`;
+
+  const [fileNames, setFileNames] = useState<string[]>(defaultFileNames);
+  const [ignoreFile, setIgnoreFile] = useState<string>(defaultIgnore);
   const [ig, setIg] = useState<Ignore>(ignore());
 
   useEffect(() => {
@@ -31,7 +66,8 @@ function App() {
       {/* body */}
       <GridItem>
         <Heading size={'lg'} mb={4}>.ignore File</Heading>
-        <Textarea variant={'filled'} size={'lg'} height={'80%'} value={ignoreFile} onChange={(e) => { setIgnoreFile(e.target.value) }} />
+        <Textarea variant={'filled'} size={'lg'} height={'80%'} value={ignoreFile}
+          onChange={(e) => { setIgnoreFile(e.target.value) }} placeholder={defaultIgnore} />
       </GridItem>
       <GridItem>
         <Heading size={'lg'} mb={'4'}>Files</Heading>
