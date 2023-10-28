@@ -1,5 +1,5 @@
-import { Heading, Textarea, Grid, GridItem, Flex } from '@chakra-ui/react'
-import FileBlock from './components/FileBlock'
+import { Heading, Textarea, Grid, GridItem, Flex } from '@chakra-ui/react';
+import FileBlock from './components/FileBlock';
 import { useEffect, useState } from 'react';
 import ignore, { Ignore } from 'ignore';
 import { v4 as uuidv4 } from 'uuid';
