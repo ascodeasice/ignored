@@ -7,8 +7,9 @@ import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { GithubIcon } from './components/icon/GithubIcon';
 
 function App() {
-  // TODO: store input in localStorage
-  const defaultFileNames = [
+  const fileNamesLsKey = 'fileNames';
+  const ignoreFileLsKey = 'ignoreFiles';
+  const initialFileNames = [
     'index.js',
     'index.html',
     'app.log',
@@ -22,7 +23,7 @@ function App() {
     '.vscode/tasks.json',
   ];
 
-  const defaultIgnore = `# match everything
+  const initialIgnore = `# match everything
 index.*
 
 # not something
@@ -43,14 +44,30 @@ one/two
 .vscode/
 `;
 
+  let defaultFileNames = initialFileNames;
+  try {
+    const savedFileNames = localStorage.getItem(fileNamesLsKey);
+    defaultFileNames = JSON.parse(savedFileNames as string) ?? initialFileNames; // invalid array/null
+  } catch (error) {
+    defaultFileNames = initialFileNames;
+  }
+  const defaultIgnoreFile = localStorage.getItem(ignoreFileLsKey) ?? initialIgnore;
+
+
   const [fileNames, setFileNames] = useState<string[]>(defaultFileNames);
-  const [ignoreFile, setIgnoreFile] = useState<string>(defaultIgnore);
+  const [ignoreFile, setIgnoreFile] = useState<string>(defaultIgnoreFile);
   const [ig, setIg] = useState<Ignore>(ignore());
 
   useEffect(() => {
     const newIg = ignore().add(ignoreFile);
     setIg(newIg);
+
+    localStorage.setItem(ignoreFileLsKey, ignoreFile);
   }, [ignoreFile]);
+
+  useEffect(() => {
+    localStorage.setItem(fileNamesLsKey, JSON.stringify(fileNames));
+  }, [fileNames])
 
   const createFile = () => {
     setFileNames(fileNames.concat(['']));
@@ -75,7 +92,7 @@ one/two
       <GridItem>
         <Heading size={'lg'} mb={4}>Ignore File</Heading>
         <Textarea variant={'filled'} size={'lg'} height={'80%'} value={ignoreFile}
-          onChange={(e) => { setIgnoreFile(e.target.value) }} placeholder={defaultIgnore} />
+          onChange={(e) => { setIgnoreFile(e.target.value) }} placeholder={initialIgnore} />
       </GridItem>
       <GridItem>
         <Heading size={'lg'} mb={'4'}>Files</Heading>
