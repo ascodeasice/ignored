@@ -32,7 +32,8 @@ function App() {
         <Heading size={'lg'} mb={'4'}>Files</Heading>
         <Flex direction={'column'} gap={2}>
           {
-            fileNames.map((name) => <FileBlock key={uuidv4()} fileName={name} ignored={ig.ignores(name)} />)
+            fileNames.map((name, index) => <FileBlock key={uuidv4()}
+              fileName={name} ignored={ig.ignores(name)} index={index} setFileNames={setFileNames} />)
           }
         </Flex>
       </GridItem>
